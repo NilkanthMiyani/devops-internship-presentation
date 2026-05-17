@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Internship Presentation</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        aws: { orange: '#FF9900' }
+                    },
+                    backgroundColor: {
+                        theme: 'var(--bg)', card: 'var(--card-bg)', hover: 'var(--card-hover)',
+                    },
+                    textColor: {
+                        theme: 'var(--text)', muted: 'var(--text-muted)',
+                    },
+                    borderColor: {
+                        theme: 'var(--card-border)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'], mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F8FAFC;
+            --text: #0F172A;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --card-border: rgba(0,0,0,0.1);
+            --card-hover: rgba(0,0,0,0.05);
+            --nav-bg: rgba(255,255,255,0.85);
+            --nav-btn: #f1f5f9;
+            --nav-btn-hover: #e2e8f0;
+            --nav-btn-text: #475569;
+            --divider: rgba(0,0,0,0.1);
+            --terminal-bg: #1e293b;
+        }
+        .dark {
+            --bg: #0B0F19;
+            --text: #ffffff;
+            --text-muted: #94A3B8;
+            --card-bg: #131722;
+            --card-border: rgba(255,255,255,0.05);
+            --card-hover: rgba(255,255,255,0.05);
+            --nav-bg: rgba(19, 23, 34, 0.85);
+            --nav-btn: #1e293b;
+            --nav-btn-hover: #334155;
+            --nav-btn-text: #ffffff;
+            --divider: rgba(255,255,255,0.2);
+            --terminal-bg: #050505;
+        }
+
+        body { margin: 0; overflow: hidden; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); transition: background-color 0.3s, color 0.3s; }
+        #slides-container { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+        
+        .slide { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            opacity: 0; transform: translateX(50px) scale(0.98);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            display: flex; flex-direction: column; padding: 6rem 8rem;
+        }
+        .slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; z-index: 10; }
+        .slide.prev { transform: translateX(-50px) scale(0.98); z-index: 0; }
+        
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 2rem 4rem; position: fixed; top: 0; left: 0; right: 0; z-index: 50; }
+        
+        .control-bar {
+            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            display: flex; align-items: center; gap: 1rem;
+            background: var(--nav-bg); backdrop-filter: blur(12px);
+            padding: 0.75rem 1.5rem; border-radius: 9999px; border: 1px solid var(--card-border);
+            z-index: 50; box-shadow: 0 10px 30px rgba(0,0,0,0.15); transition: background 0.3s, border 0.3s;
+        }
+        .control-btn {
+            width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            background: var(--nav-btn); color: var(--nav-btn-text); cursor: pointer; transition: all 0.2s; border: 1px solid transparent;
+        }
+        .control-btn:hover { background: var(--nav-btn-hover); border-color: var(--card-border); }
+        .slide-counter { font-family: monospace; font-size: 15px; color: var(--text-muted); margin: 0 1rem; letter-spacing: 2px; }
+        
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        
+        .theme-card { transition: all 0.3s ease; }
+        .theme-card:hover { border-color: #FF9900 !important; }
+    </style>
+</head>
+<body class="bg-theme text-theme">
+    <div class="top-nav">
+        <div class="flex items-center gap-3">
+            <i class="fab fa-aws text-aws-orange text-4xl"></i>
+            <span class="font-semibold text-xl tracking-wide ml-2">Internship Presentation 2026</span>
+        </div>
+        <div class="text-muted font-mono text-sm slide-indicator tracking-widest">1 / 17</div>
+    </div>
+
+    <div id="slides-container">
+        
+        <!-- Slide 1 -->
+        <div class="slide active">
+            <div class="flex-1 flex flex-col justify-center items-center text-center max-w-5xl mx-auto">
+                <div class="text-aws-orange text-sm font-bold tracking-[0.3em] uppercase mb-8">Internship Completion</div>
+                <h1 class="text-6xl md:text-8xl font-bold mb-8 tracking-tight leading-tight">DevOps & Cloud <br><span class="text-aws-orange">Engineering</span></h1>
+                <p class="text-2xl text-muted mb-12 font-light">12-Week Comprehensive Training & Project Experience</p>
+                <div class="w-16 h-[1px] bg-[var(--divider)] mb-12"></div>
+                <div class="text-xl font-semibold tracking-wide">Nilkanth Miyani</div>
+                <div class="text-muted mt-3 font-light">B.E. Information Technology</div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+                <h2 class="text-4xl font-bold mb-16">Internship <span class="text-aws-orange">Overview</span></h2>
+                <div class="grid grid-cols-2 gap-8">
+                    <div class="bg-card border border-theme p-10 rounded-2xl group theme-card">
+                        <div class="text-aws-orange mb-6 text-3xl"><i class="fas fa-briefcase"></i></div>
+                        <h3 class="text-2xl font-bold mb-6 text-theme">The Role</h3>
+                        <ul class="space-y-5 text-muted text-lg">
+                            <li class="flex items-center gap-4"><i class="fas fa-check text-aws-orange text-sm"></i> DevOps Engineering Intern</li>
+                            <li class="flex items-center gap-4"><i class="fas fa-check text-aws-orange text-sm"></i> 12 Weeks Duration</li>
+                            <li class="flex items-center gap-4"><i class="fas fa-check text-aws-orange text-sm"></i> GTU Internship Program</li>
+                        </ul>
+                    </div>
+                    <div class="bg-card border border-theme p-10 rounded-2xl group theme-card">
+                        <div class="text-aws-orange mb-6 text-3xl"><i class="fas fa-bullseye"></i></div>
+                        <h3 class="text-2xl font-bold mb-6 text-theme">Core Focus Areas</h3>
+                        <ul class="space-y-5 text-muted text-lg">
+                            <li class="flex items-center gap-4"><i class="fas fa-bolt text-aws-orange text-sm"></i> AWS Cloud Infrastructure</li>
+                            <li class="flex items-center gap-4"><i class="fas fa-bolt text-aws-orange text-sm"></i> Docker & Kubernetes</li>
+                            <li class="flex items-center gap-4"><i class="fas fa-bolt text-aws-orange text-sm"></i> CI/CD Automation & Linux</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+                <h2 class="text-4xl font-bold mb-16">What is <span class="text-aws-orange">DevOps?</span></h2>
+                <div class="bg-card border border-theme p-12 rounded-3xl mb-8 relative overflow-hidden">
+                    <p class="text-2xl leading-relaxed text-muted font-light relative z-10">DevOps is a culture and set of practices that unifies software development (<strong class="text-theme">Dev</strong>) and IT operations (<strong class="text-theme">Ops</strong>). It aims to shorten the development lifecycle and provide continuous delivery with high software quality.</p>
+                </div>
+                <div class="grid grid-cols-2 gap-6 mt-8">
+                    <div class="flex items-center gap-5 p-6 rounded-2xl bg-hover border border-theme">
+                        <div class="w-12 h-12 rounded-full bg-aws-orange/10 flex items-center justify-center text-aws-orange text-xl"><i class="fas fa-robot"></i></div>
+                        <div><div class="font-bold text-lg text-theme">Automation</div><div class="text-muted text-sm mt-1">Replacing manual processes</div></div>
+                    </div>
+                    <div class="flex items-center gap-5 p-6 rounded-2xl bg-hover border border-theme">
+                        <div class="w-12 h-12 rounded-full bg-aws-orange/10 flex items-center justify-center text-aws-orange text-xl"><i class="fas fa-users"></i></div>
+                        <div><div class="font-bold text-lg text-theme">Collaboration</div><div class="text-muted text-sm mt-1">Breaking down silos</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+                <h2 class="text-4xl font-bold mb-12">Core <span class="text-aws-orange">Technologies</span></h2>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="bg-card p-8 rounded-2xl border border-theme theme-card">
+                        <div class="text-aws-orange text-3xl mb-4"><i class="fas fa-sync"></i></div>
+                        <h3 class="text-xl font-bold mb-3 text-theme">CI/CD Pipelines</h3>
+                        <p class="text-muted text-sm leading-relaxed">Continuous Integration & Deployment automates the building, testing, and rollout of applications reliably.</p>
+                    </div>
+                    <div class="bg-card p-8 rounded-2xl border border-theme theme-card">
+                        <div class="text-aws-orange text-3xl mb-4"><i class="fas fa-code"></i></div>
+                        <h3 class="text-xl font-bold mb-3 text-theme">Infrastructure as Code</h3>
+                        <p class="text-muted text-sm leading-relaxed">Managing and provisioning computing infrastructure through code instead of manual processes.</p>
+                    </div>
+                    <div class="bg-card p-8 rounded-2xl border border-theme theme-card">
+                        <div class="text-aws-orange text-3xl mb-4"><i class="fab fa-docker"></i></div>
+                        <h3 class="text-xl font-bold mb-3 text-theme">Containers & Kubernetes</h3>
+                        <p class="text-muted text-sm leading-relaxed">Packaging applications into isolated containers and orchestrating them efficiently across clusters.</p>
+                    </div>
+                    <div class="bg-card p-8 rounded-2xl border border-theme theme-card">
+                        <div class="text-aws-orange text-3xl mb-4"><i class="fas fa-cloud"></i></div>
+                        <h3 class="text-xl font-bold mb-3 text-theme">Cloud Computing</h3>
+                        <p class="text-muted text-sm leading-relaxed">Leveraging highly available, scalable cloud environments like AWS for modern architecture.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+                <div class="text-aws-orange text-sm font-bold tracking-widest uppercase mb-4">Deep Dive</div>
+                <h2 class="text-4xl font-bold mb-12">1. CI/CD <span class="text-aws-orange">Pipelines</span></h2>
+                <div class="flex gap-12 items-center">
+                    <div class="flex-1">
+                        <p class="text-xl text-muted font-light mb-8 leading-relaxed">A CI/CD pipeline is an automated series of steps that must be performed to deliver a new version of software.</p>
+                        <div class="space-y-6">
+                            <div class="bg-card p-6 rounded-xl border border-theme theme-card">
+                                <h3 class="font-bold text-aws-orange mb-2 text-xl"><i class="fas fa-code-branch mr-2"></i> Continuous Integration (CI)</h3>
+                                <p class="text-muted text-base leading-relaxed">Developers frequently merge code changes into a central repository. Automated builds and tests are run to ensure code quality.</p>
+                            </div>
+                            <div class="bg-card p-6 rounded-xl border border-theme theme-card">
+                                <h3 class="font-bold text-aws-orange mb-2 text-xl"><i class="fas fa-rocket mr-2"></i> Continuous Deployment (CD)</h3>
+                                <p class="text-muted text-base leading-relaxed">Every change that passes all stages of your production pipeline is released to your customers automatically.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-1/3 flex flex-col items-center gap-4 bg-card p-10 rounded-2xl border border-theme">
+                        <div class="w-16 h-16 rounded-full bg-hover flex items-center justify-center text-2xl text-blue-500"><i class="fas fa-laptop-code"></i></div>
+                        <div class="h-8 w-1 bg-[var(--divider)]"></div>
+                        <div class="w-16 h-16 rounded-full bg-hover flex items-center justify-center text-2xl text-green-500"><i class="fas fa-vial"></i></div>
+                        <div class="h-8 w-1 bg-[var(--divider)]"></div>
+                        <div class="w-16 h-16 rounded-full bg-hover flex items-center justify-center text-2xl text-aws-orange"><i class="fas fa-box"></i></div>
+                        <div class="h-8 w-1 bg-[var(--divider)]"></div>
+                        <div class="w-16 h-16 rounded-full bg-hover flex items-center justify-center text-2xl text-purple-500"><i class="fas fa-cloud-upload-alt"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+                <div class="text-aws-orange text-sm font-bold tracking-widest uppercase mb-4">Deep Dive</div>
+                <h2 class="text-4xl font-bold mb-12">2. Infrastructure <span class="text-aws-orange">as Code (IaC)</span></h2>
+                <div class="flex gap-12 items-center">
+                    <div class="flex-1">
+                        <p class="text-xl text-muted font-light mb-8 leading-relaxed">Replacing manual infrastructure management with declarative configuration files.</p>
+                        <ul class="space-y-6">
+                            <li class="flex gap-4 items-start">
+                                <i class="fas fa-history text-aws-orange mt-1"></i>
+                                <div><strong class="text-lg block mb-1 text-theme">Version Control</strong><span class="text-muted text-sm">Infrastructure definitions are stored in Git, enabling rollback, audit logs, and collaborative peer reviews.</span></div>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <i class="fas fa-copy text-aws-orange mt-1"></i>
+                                <div><strong class="text-lg block mb-1 text-theme">Consistency & Repeatability</strong><span class="text-muted text-sm">Eliminates "configuration drift". Spin up exact replicas of production environments for testing instantly.</span></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="w-[45%]">
+                        <div class="rounded-2xl border border-theme overflow-hidden shadow-2xl" style="background: var(--terminal-bg);">
+                            <div class="bg-black/20 px-4 py-3 flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div><div class="w-3 h-3 rounded-full bg-yellow-500"></div><div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="p-6 font-mono text-sm leading-loose">
+                                <span class="text-pink-500 dark:text-pink-400">Resources:</span><br>
+                                &nbsp;&nbsp;<span class="text-yellow-600 dark:text-yellow-200">WebAppInstance:</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-pink-500 dark:text-pink-400">Type:</span> <span class="text-green-600 dark:text-green-300">"AWS::EC2::Instance"</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-pink-500 dark:text-pink-400">Properties:</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-pink-500 dark:text-pink-400">ImageId:</span> <span class="text-green-600 dark:text-green-300">"ami-0c55b159cbfafe1f0"</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-pink-500 dark:text-pink-400">InstanceType:</span> <span class="text-green-600 dark:text-green-300">"t3.micro"</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-pink-500 dark:text-pink-400">SecurityGroups:</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-theme">-</span> <span class="text-yellow-600 dark:text-yellow-200">!Ref</span> WebSecurityGroup
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+                <div class="text-aws-orange text-sm font-bold tracking-widest uppercase mb-4">Deep Dive</div>
+                <h2 class="text-4xl font-bold mb-12">3. Containers & <span class="text-aws-orange">Kubernetes</span></h2>
+                <div class="grid grid-cols-2 gap-8">
+                    <div class="bg-card border border-theme p-10 rounded-2xl theme-card">
+                        <div class="text-[#2496ED] mb-6 text-5xl"><i class="fab fa-docker"></i></div>
+                        <h3 class="text-2xl font-bold mb-4 text-theme">Docker (Containerization)</h3>
+                        <p class="text-muted text-lg mb-6 leading-relaxed">Containers package an application and all its dependencies into a single, standard unit for software development.</p>
+                        <ul class="space-y-3 text-sm text-muted">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i> Solves "It works on my machine"</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i> Lightweight & fast to start</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i> Resource isolation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-card border border-theme p-10 rounded-2xl theme-card">
+                        <div class="text-[#326CE5] mb-6 text-5xl"><i class="fas fa-dharmachakra"></i></div>
+                        <h3 class="text-2xl font-bold mb-4 text-theme">Kubernetes (Orchestration)</h3>
+                        <p class="text-muted text-lg mb-6 leading-relaxed">An open-source system for automating deployment, scaling, and management of containerized applications.</p>
+                        <ul class="space-y-3 text-sm text-muted">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i> Automated rollouts & rollbacks</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i> Service discovery & load balancing</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i> Self-healing & auto-scaling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+                <div class="text-aws-orange text-sm font-bold tracking-widest uppercase mb-4">Deep Dive</div>
+                <h2 class="text-4xl font-bold mb-12">4. Cloud <span class="text-aws-orange">Computing</span></h2>
+                <div class="flex gap-12 items-center">
+                    <div class="w-1/3 text-center">
+                        <i class="fab fa-aws text-[140px] text-aws-orange animate-float inline-block"></i>
+                        <h3 class="text-3xl font-bold mt-8 text-theme">Amazon Web Services</h3>
+                    </div>
+                    <div class="flex-1 grid grid-cols-2 gap-4">
+                        <div class="bg-card p-6 rounded-xl border border-theme theme-card">
+                            <div class="text-aws-orange text-xl mb-3"><i class="fas fa-server"></i></div>
+                            <h4 class="font-bold mb-1 text-lg text-theme">Compute (EC2)</h4>
+                            <p class="text-sm text-muted">Virtual servers in the cloud, offering resizable compute capacity.</p>
+                        </div>
+                        <div class="bg-card p-6 rounded-xl border border-theme theme-card">
+                            <div class="text-aws-orange text-xl mb-3"><i class="fas fa-database"></i></div>
+                            <h4 class="font-bold mb-1 text-lg text-theme">Storage (S3)</h4>
+                            <p class="text-sm text-muted">Object storage built to store and retrieve any amount of data.</p>
+                        </div>
+                        <div class="bg-card p-6 rounded-xl border border-theme theme-card">
+                            <div class="text-aws-orange text-xl mb-3"><i class="fas fa-network-wired"></i></div>
+                            <h4 class="font-bold mb-1 text-lg text-theme">Networking (VPC)</h4>
+                            <p class="text-sm text-muted">Logically isolated section of the AWS Cloud for secure resources.</p>
+                        </div>
+                        <div class="bg-card p-6 rounded-xl border border-theme theme-card">
+                            <div class="text-aws-orange text-xl mb-3"><i class="fas fa-id-card"></i></div>
+                            <h4 class="font-bold mb-1 text-lg text-theme">Security (IAM)</h4>
+                            <p class="text-sm text-muted">Securely manage access to AWS services and resources.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+                <h2 class="text-4xl font-bold mb-12">Platforms & <span class="text-aws-orange">Tools</span></h2>
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="bg-card border border-theme p-6 rounded-2xl flex items-center gap-5 hover:bg-hover transition-colors">
+                        <i class="fab fa-git-alt text-3xl text-orange-500"></i>
+                        <div><div class="font-bold text-theme">Git</div><div class="text-xs text-muted mt-1">Version Control</div></div>
+                    </div>
+                    <div class="bg-card border border-theme p-6 rounded-2xl flex items-center gap-5 hover:bg-hover transition-colors">
+                        <i class="fab fa-github text-3xl text-slate-800 dark:text-white"></i>
+                        <div><div class="font-bold text-theme">GitHub</div><div class="text-xs text-muted mt-1">Repository</div></div>
+                    </div>
+                    <div class="bg-card border border-theme p-6 rounded-2xl flex items-center gap-5 hover:bg-hover transition-colors">
+                        <i class="fas fa-play-circle text-3xl text-blue-500"></i>
+                        <div><div class="font-bold text-theme">GitHub Actions</div><div class="text-xs text-muted mt-1">CI/CD</div></div>
+                    </div>
+                    <div class="bg-card border border-theme p-6 rounded-2xl flex items-center gap-5 hover:bg-hover transition-colors">
+                        <i class="fab fa-jenkins text-3xl text-red-500"></i>
+                        <div><div class="font-bold text-theme">Jenkins</div><div class="text-xs text-muted mt-1">Automation</div></div>
+                    </div>
+                    <div class="bg-card border border-theme p-6 rounded-2xl flex items-center gap-5 hover:bg-hover transition-colors">
+                        <i class="fab fa-docker text-3xl text-blue-400"></i>
+                        <div><div class="font-bold text-theme">Docker</div><div class="text-xs text-muted mt-1">Containerization</div></div>
+                    </div>
+                    <div class="bg-card border border-theme p-6 rounded-2xl flex items-center gap-5 hover:bg-hover transition-colors">
+                        <i class="fas fa-dharmachakra text-3xl text-blue-600"></i>
+                        <div><div class="font-bold text-theme">Kubernetes</div><div class="text-xs text-muted mt-1">Orchestration</div></div>
+                    </div>
+                    <div class="bg-card border border-theme p-6 rounded-2xl flex items-center gap-5 hover:bg-hover transition-colors border-aws-orange/30">
+                        <i class="fab fa-aws text-3xl text-aws-orange"></i>
+                        <div><div class="font-bold text-aws-orange">AWS</div><div class="text-xs text-muted mt-1">Cloud Provider</div></div>
+                    </div>
+                    <div class="bg-card border border-theme p-6 rounded-2xl flex items-center gap-5 hover:bg-hover transition-colors">
+                        <i class="fab fa-linux text-3xl text-slate-700 dark:text-gray-300"></i>
+                        <div><div class="font-bold text-theme">Linux</div><div class="text-xs text-muted mt-1">Operating System</div></div>
+                    </div>
+                    <div class="bg-card border border-theme p-6 rounded-2xl flex items-center gap-5 hover:bg-hover transition-colors">
+                        <i class="fas fa-code text-3xl text-blue-500"></i>
+                        <div><div class="font-bold text-theme">VS Code</div><div class="text-xs text-muted mt-1">Editor</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+                <h2 class="text-4xl font-bold mb-12">Tasks & <span class="text-aws-orange">Projects</span></h2>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="bg-card border border-theme p-6 rounded-xl flex items-center gap-5 theme-card">
+                        <div class="w-12 h-12 rounded-full bg-hover flex items-center justify-center text-aws-orange text-xl"><i class="fas fa-code-branch"></i></div>
+                        <div class="text-lg text-theme">Created robust <strong>CI/CD pipelines</strong> using GitHub Actions & Jenkins</div>
+                    </div>
+                    <div class="bg-card border border-theme p-6 rounded-xl flex items-center gap-5 theme-card">
+                        <div class="w-12 h-12 rounded-full bg-hover flex items-center justify-center text-aws-orange text-xl"><i class="fab fa-docker"></i></div>
+                        <div class="text-lg text-theme">Built & optimized <strong>Docker images</strong> and pushed to AWS ECR</div>
+                    </div>
+                    <div class="bg-card border border-theme p-6 rounded-xl flex items-center gap-5 theme-card">
+                        <div class="w-12 h-12 rounded-full bg-hover flex items-center justify-center text-aws-orange text-xl"><i class="fas fa-rocket"></i></div>
+                        <div class="text-lg text-theme">Deployed containerized apps to <strong>EKS & ECS</strong> clusters</div>
+                    </div>
+                    <div class="bg-card border border-theme p-6 rounded-xl flex items-center gap-5 theme-card">
+                        <div class="w-12 h-12 rounded-full bg-hover flex items-center justify-center text-aws-orange text-xl"><i class="fas fa-chart-line"></i></div>
+                        <div class="text-lg text-theme">Monitored infra health with <strong>CloudWatch & Grafana</strong></div>
+                    </div>
+                    <div class="bg-card border border-theme p-6 rounded-xl flex items-center gap-5 theme-card">
+                        <div class="w-12 h-12 rounded-full bg-hover flex items-center justify-center text-aws-orange text-xl"><i class="fas fa-code"></i></div>
+                        <div class="text-lg text-theme">Provisioned cloud infra with <strong>Terraform & CloudFormation</strong></div>
+                    </div>
+                    <div class="bg-card border border-theme p-6 rounded-xl flex items-center gap-5 theme-card">
+                        <div class="w-12 h-12 rounded-full bg-hover flex items-center justify-center text-aws-orange text-xl"><i class="fas fa-shield-alt"></i></div>
+                        <div class="text-lg text-theme">Applied <strong>DevSecOps</strong> practices with Trivy & SonarQube scans</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11 -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+                <div class="text-aws-orange text-sm font-bold tracking-[0.2em] uppercase mb-4">Major Project</div>
+                <h2 class="text-4xl font-bold mb-16">GitHub Actions <span class="text-aws-orange">CI/CD Demo</span></h2>
+                <div class="relative">
+                    <div class="absolute top-12 left-10 right-10 h-1 bg-[var(--divider)] rounded"></div>
+                    <div class="absolute top-12 left-10 h-1 bg-aws-orange rounded transition-all duration-1000 w-full opacity-50"></div>
+                    <div class="grid grid-cols-4 gap-4 relative z-10">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-24 h-24 rounded-full bg-card border-2 border-aws-orange flex items-center justify-center text-3xl mb-6 text-slate-800 dark:text-white"><i class="fab fa-github"></i></div>
+                            <h4 class="font-bold text-lg mb-2 text-theme">Trigger</h4><p class="text-muted text-sm">On code push</p>
+                        </div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-24 h-24 rounded-full bg-card border-2 border-theme flex items-center justify-center text-3xl mb-6"><i class="fas fa-vial text-blue-500"></i></div>
+                            <h4 class="font-bold text-lg mb-2 text-theme">Test</h4><p class="text-muted text-sm">Automated tests</p>
+                        </div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-24 h-24 rounded-full bg-card border-2 border-theme flex items-center justify-center text-3xl mb-6"><i class="fab fa-docker text-blue-500"></i></div>
+                            <h4 class="font-bold text-lg mb-2 text-theme">Build</h4><p class="text-muted text-sm">Docker image</p>
+                        </div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-24 h-24 rounded-full bg-card border-2 border-theme flex items-center justify-center text-3xl mb-6"><i class="fas fa-cloud-upload-alt text-green-500"></i></div>
+                            <h4 class="font-bold text-lg mb-2 text-theme">Deploy</h4><p class="text-muted text-sm">Securely rollout</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12 -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-5xl mx-auto w-full">
+                <div class="border border-theme rounded-2xl overflow-hidden shadow-2xl" style="background: var(--terminal-bg);">
+                    <div class="bg-black/20 px-6 py-4 flex items-center gap-3 border-b border-[var(--divider)]">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div><div class="w-3 h-3 rounded-full bg-yellow-500"></div><div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <div class="ml-4 font-mono text-sm text-slate-400">nilkanth@devops: ~/live-demo</div>
+                    </div>
+                    <div class="p-16 flex flex-col items-center text-center">
+                        <div class="text-6xl text-aws-orange mb-8 animate-pulse"><i class="fas fa-terminal"></i></div>
+                        <h2 class="text-4xl font-bold mb-4 text-slate-100">Live Demonstration</h2>
+                        <p class="text-slate-400 text-xl max-w-2xl">Executing the GitHub Actions pipeline to showcase real-time testing, building, and deployment.</p>
+                        <div class="mt-10 px-8 py-3 bg-white/10 border border-white/10 rounded-full font-mono text-sm text-slate-200">
+                            > ./run-pipeline.sh
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Project CIS -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+                <div class="text-aws-orange text-sm font-bold tracking-widest uppercase mb-4">Project Deep Dive</div>
+                <h2 class="text-4xl font-bold mb-10">CIS: <span class="text-aws-orange">Automated Deployment Pipeline</span></h2>
+                
+                <div class="bg-card border border-theme p-6 rounded-2xl shadow-xl mb-10">
+                    <img src="assets/photo1.png" alt="CIS Pipeline Stages" class="w-full rounded-xl border border-[var(--divider)]">
+                </div>
+                
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="bg-card p-5 rounded-xl border border-theme theme-card">
+                        <div class="text-aws-orange mb-2"><i class="fas fa-code-branch"></i></div>
+                        <h4 class="font-bold text-theme mb-2">1. Source & Versioning</h4>
+                        <p class="text-sm text-muted">Pulling the latest code and dynamically setting the image tag based on the Git commit SHA for traceability.</p>
+                    </div>
+                    <div class="bg-card p-5 rounded-xl border border-theme theme-card">
+                        <div class="text-blue-500 mb-2"><i class="fab fa-docker"></i></div>
+                        <h4 class="font-bold text-theme mb-2">2. Docker Buildx</h4>
+                        <p class="text-sm text-muted">Authenticating with AWS ECR and using Docker Buildx to concurrently build optimized images.</p>
+                    </div>
+                    <div class="bg-card p-5 rounded-xl border border-theme theme-card">
+                        <div class="text-green-500 mb-2"><i class="fas fa-cloud-upload-alt"></i></div>
+                        <h4 class="font-bold text-theme mb-2">3. Push to Registry</h4>
+                        <p class="text-sm text-muted">Securely pushing both the Backend and Admin services to the Elastic Container Registry for deployment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Project SOSI -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+                <div class="text-aws-orange text-sm font-bold tracking-widest uppercase mb-4">Project Deep Dive</div>
+                <h2 class="text-4xl font-bold mb-10">SOSI: <span class="text-aws-orange">Infrastructure Monitoring</span></h2>
+                
+                <div class="flex gap-8 items-center">
+                    <div class="w-[45%] space-y-6">
+                        <p class="text-lg text-muted mb-4">Implemented comprehensive monitoring and alerting for the production environment using AWS CloudWatch.</p>
+                        
+                        <div class="bg-card border border-theme p-5 rounded-xl flex items-start gap-4 theme-card">
+                            <div class="mt-1 text-aws-orange"><i class="fas fa-server"></i></div>
+                            <div>
+                                <h4 class="font-bold text-theme">Compute Tracking</h4>
+                                <p class="text-sm text-muted mt-1">Real-time tracking of CPU & Memory utilization across Web Servers and Job Servers.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-card border border-theme p-5 rounded-xl flex items-start gap-4 theme-card">
+                            <div class="mt-1 text-blue-500"><i class="fas fa-database"></i></div>
+                            <div>
+                                <h4 class="font-bold text-theme">Database Health</h4>
+                                <p class="text-sm text-muted mt-1">Monitoring DocumentDB Read/Write IOPS, Connection Counts, and CPU usage to ensure data availability.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="w-[55%]">
+                        <div class="bg-card border border-theme p-3 rounded-2xl shadow-2xl">
+                            <img src="assets/photo2.png" alt="SOSI CloudWatch Dashboard" class="w-full rounded-xl border border-[var(--divider)]">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15 -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold mb-4">Skills & <span class="text-aws-orange">Technologies</span></h2>
+                    <p class="text-muted">Comprehensive stack utilized during the internship and projects</p>
+                </div>
+                <div class="grid grid-cols-2 gap-8 text-left">
+                    
+                    <!-- Cloud -->
+                    <div class="bg-card border border-theme p-8 rounded-2xl theme-card shadow-lg">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-12 h-12 rounded-full bg-aws-orange/10 flex items-center justify-center text-aws-orange text-xl"><i class="fab fa-aws"></i></div>
+                            <h3 class="text-xl font-bold text-theme">Cloud & Architecture</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">AWS Ecosystem</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">EC2, S3, VPC</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">EKS & ECS</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">Lambda & API Gateway</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">HA / Scalable Design</span>
+                        </div>
+                    </div>
+
+                    <!-- DevOps -->
+                    <div class="bg-card border border-theme p-8 rounded-2xl theme-card shadow-lg">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500 text-xl"><i class="fas fa-code-branch"></i></div>
+                            <h3 class="text-xl font-bold text-theme">DevOps & IaC</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">Docker & K8s</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">Terraform</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">CloudFormation</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">GitHub Actions</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">Jenkins & GitLab CI</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">Ansible & Helm</span>
+                        </div>
+                    </div>
+
+                    <!-- Monitoring -->
+                    <div class="bg-card border border-theme p-8 rounded-2xl theme-card shadow-lg">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 text-xl"><i class="fas fa-shield-alt"></i></div>
+                            <h3 class="text-xl font-bold text-theme">Monitoring & DevSecOps</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">Prometheus & Grafana</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">AWS CloudWatch</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">SonarQube</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">Trivy & Checkov</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">OWASP Dep Check</span>
+                        </div>
+                    </div>
+
+                    <!-- Programming -->
+                    <div class="bg-card border border-theme p-8 rounded-2xl theme-card shadow-lg">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-500 text-xl"><i class="fas fa-terminal"></i></div>
+                            <h3 class="text-xl font-bold text-theme">Programming & OS</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">Python</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">Bash Scripting</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">Linux Administration</span>
+                            <span class="px-4 py-2 bg-hover rounded-lg text-sm border border-[var(--divider)] text-theme font-medium">System Troubleshooting</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16 -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full">
+                <h2 class="text-4xl font-bold mb-12">Key <span class="text-aws-orange">Learnings</span></h2>
+                <div class="grid grid-cols-2 gap-8">
+                    <div class="bg-card border border-theme p-8 rounded-2xl theme-card">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-hover flex items-center justify-center text-aws-orange text-xl"><i class="fas fa-cogs"></i></div>
+                            <h3 class="text-2xl font-bold text-theme">Automation</h3>
+                        </div>
+                        <p class="text-muted">Replacing manual tasks with automated scripts and pipelines.</p>
+                    </div>
+                    <div class="bg-card border border-theme p-8 rounded-2xl theme-card">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-hover flex items-center justify-center text-aws-orange text-xl"><i class="fas fa-shield-alt"></i></div>
+                            <h3 class="text-2xl font-bold text-theme">Security</h3>
+                        </div>
+                        <p class="text-muted">Integrating security checks early via DevSecOps principles.</p>
+                    </div>
+                    <div class="bg-card border border-theme p-8 rounded-2xl theme-card">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-hover flex items-center justify-center text-aws-orange text-xl"><i class="fas fa-users"></i></div>
+                            <h3 class="text-2xl font-bold text-theme">Team Collaboration</h3>
+                        </div>
+                        <p class="text-muted">Mastering Git branching and effective peer reviews.</p>
+                    </div>
+                    <div class="bg-card border border-theme p-8 rounded-2xl theme-card">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-hover flex items-center justify-center text-aws-orange text-xl"><i class="fas fa-industry"></i></div>
+                            <h3 class="text-2xl font-bold text-theme">Industry Practices</h3>
+                        </div>
+                        <p class="text-muted">Adopting enterprise-level standards for cloud architecture.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17 -->
+        <div class="slide">
+            <div class="flex-1 flex flex-col justify-center items-center text-center max-w-4xl mx-auto">
+                <div class="w-24 h-24 rounded-full bg-aws-orange/10 flex items-center justify-center text-aws-orange text-5xl mb-8 border border-aws-orange/30"><i class="fas fa-check"></i></div>
+                <h1 class="text-7xl font-bold mb-6 tracking-tight text-theme">Thank <span class="text-aws-orange">You</span></h1>
+                <p class="text-3xl text-muted mb-12">Any Questions?</p>
+                <div class="bg-card border border-theme px-10 py-6 rounded-2xl">
+                    <p class="text-lg text-muted">Special thanks to my mentors and faculty <i class="fas fa-heart text-red-500 mx-2"></i> for their invaluable guidance.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="control-bar">
+        <button class="control-btn" onclick="prevSlide()" title="Previous (Left Arrow)"><i class="fas fa-chevron-left"></i></button>
+        <div class="slide-counter"><span id="current">1</span> / <span id="total">17</span></div>
+        <button class="control-btn" onclick="nextSlide()" title="Next (Right Arrow)"><i class="fas fa-chevron-right"></i></button>
+        <div class="w-[1px] h-6 bg-[var(--divider)] mx-2"></div>
+        <button class="control-btn" onclick="toggleFullscreen()" title="Fullscreen (F)"><i id="fs-icon" class="fas fa-expand"></i></button>
+        <button class="control-btn" onclick="toggleTheme()" title="Toggle Theme (T)"><i id="theme-icon" class="fas fa-sun"></i></button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        let isDark = true;
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else if (index < currentSlide) {
+                    slide.classList.add('prev');
+                }
+            });
+            document.getElementById('current').innerText = currentSlide + 1;
+            document.querySelector('.slide-indicator').innerText = (currentSlide + 1) + ' / ' + slides.length;
+        }
+
+        function nextSlide() { if (currentSlide < slides.length - 1) { currentSlide++; updateSlides(); } }
+        function prevSlide() { if (currentSlide > 0) { currentSlide--; updateSlides(); } }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().then(() => {
+                    document.getElementById('fs-icon').className = "fas fa-compress";
+                }).catch(err => { console.log(err.message); });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    document.getElementById('fs-icon').className = "fas fa-expand";
+                }
+            }
+        }
+        
+        function toggleTheme() {
+            isDark = !isDark;
+            const htmlElement = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            if (isDark) {
+                htmlElement.classList.add('dark');
+                themeIcon.className = 'fas fa-sun'; 
+            } else {
+                htmlElement.classList.remove('dark');
+                themeIcon.className = 'fas fa-moon';
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') nextSlide();
+            if (e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+            if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+            if (e.key === 't' || e.key === 'T') toggleTheme();
+        });
+
+        updateSlides();
+    </script>
+</body>
+</html>
